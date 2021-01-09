@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <title>Halaman Login</title>
+    <style>
+        html {
+            width:100%;
+            height:100%
+        }
+        body {
+            width:100%;
+            height:100%;
+            background-color:#f3f3f3;
+            justify-content: flex-end;
+            align-items: center;
+            padding:0px;
+            margin:0px;
+            display:flex;
+            font-family: 'Open Sans', sans-serif;
+
+        }
+        .cardlogin {
+            width:33rem;
+            height:32rem;
+            margin-right:150px;
+            margin-left:150px;
+            border-radius:10px;
+            background-color:white;
+            -webkit-box-shadow: 0px 4px 24px -3px rgb(0 0 0 / 13%);
+            box-shadow: 0px 4px 24px -3px rgb(0 0 0 / 13%);
+        }
+        .cardlogin > .title {
+            height:130px;
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5em;
+        }
+
+        .cardlogin > .title > #title-text {
+            color:#3a6481;
+            font-weight: bold;
+        }
+        .cardlogin > .containerform {
+            height:100%;
+            padding-left:30px;
+            padding-right:30px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="cardlogin">
+        <div class="title">
+            <div id="title-text">Login to continue</div>
+        </div>
+        <div class="containerform">
+            <div style="margin-bottom:25px;border-radius:3px">
+                <div style="width:100%; color:#3a6481;font-weight: bold;">Email</div>
+                <div style="margin-top:10px;">
+                    <input id="formEmail" style="width:92%;padding:15px 15px;border:solid 1px #dedede ;outline:none;border-radius:3px;" type="email">
+                </div>
+            </div>
+           
+            <div style="margin-bottom:30px">
+                <div style="width:100%; color:#3a6481;font-weight: bold;">Password</div>
+                <div style="margin-top:10px;border-radius:3px">
+                    <input id="formPassword" style="width:92%;padding:15px 15px;border:solid 1px #dedede ;outline:none;border-radius:3px" type="password">
+                </div>
+            </div>
+            
+            <div style="margin-bottom:15px">
+               <div style="width:100%;height:3.5rem;background-color:#1F92EE;border-radius:3px;display:flex;justify-content: center;align-items: center;color:white">
+                Login
+            </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+     document.getElementById("formEmail").addEventListener("focus",(e)=>{
+         e.currentTarget.style.borderBottom=`solid 4px #1F92EE`;
+     })
+     document.getElementById("formEmail").addEventListener("blur",(e)=>{
+         e.currentTarget.style.borderBottom="solid 1px #dedede";
+     })
+
+
+     document.getElementById("formPassword").addEventListener("focus",(e)=>{
+         e.currentTarget.style.borderBottom=`solid 4px #1F92EE`;
+     })
+     document.getElementById("formPassword").addEventListener("blur",(e)=>{
+         e.currentTarget.style.borderBottom="solid 1px #dedede";
+     })
+</script>
+</html>
