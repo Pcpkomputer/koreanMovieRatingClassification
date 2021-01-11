@@ -6,7 +6,11 @@
     <title>Halaman Dataset</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <style>
+  
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+     <link href="static/bootstrap-table.min.css" rel="stylesheet">
+      <style>
         html {
             width:100%;
             height:100%;
@@ -22,6 +26,7 @@
             font-family: 'Open Sans', sans-serif;
         }
 
+    
         .sidebar {
             display:flex;
 
@@ -41,8 +46,8 @@
         }
 
         .selected {
-            background-color:#f3f3f3;
-            color:black
+            background-color:#48426d;
+            color:white
         }
 
         #scroll {
@@ -56,6 +61,7 @@
 
         .containerIsi {
             margin:20px
+            
         }
 
         @media only screen and (max-width: 600px) {
@@ -67,11 +73,21 @@
             padding-top:15px
         }
     }
+
+    .pagination>li.page-item.active>.page-link{
+            background-color:#f1aa9b
+        }
+
+    .page-link:hover {
+            color:black
+    }
+    .page-link {
+        color:black;
+        border:none
+    }
+
+   
     </style>
-    <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-     <link href="static/bootstrap-table.min.css" rel="stylesheet">
-     
 </head>
 <body>
     <div class="sidebar">
@@ -82,14 +98,14 @@
             <image  src="data:image/jpeg;base64,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" style="height:60px;width:65px;border-radius:300px;margin-left:20px"></image>
             <div style="width:100%;margin-left:10px;display:flex;flex-direction: column;margin-right: 10px;">
                 <div>Nurul Hidayati</div>
-                <div>17.12.0349</div>
+                <div>17.12.0404</div>
             </div>
         </div>
         <div id="scroll" style="overflow-y:scroll">
             <a href="{{url_for("dashboard")}}" class="menu" style="position: relative;color:black;text-decoration: none;margin-bottom:25px;display:flex;align-items: center;padding-left: 20px;margin-left:20px;height:4rem;border-top-left-radius: 20px;border-bottom-left-radius: 20px;">
                 Dashboard  
             </a>
-            <a href="{{url_for("dataset")}}" class="selected" style="margin-bottom:25px;display:flex;color:black;text-decoration: none;align-items: center;padding-left: 20px;margin-left:20px;height:4rem;border-top-left-radius: 20px;border-bottom-left-radius: 20px;">
+            <a href="{{url_for("dataset")}}" class="selected" style="margin-bottom:25px;display:flex;color:white;text-decoration: none;align-items: center;padding-left: 20px;margin-left:20px;height:4rem;border-top-left-radius: 20px;border-bottom-left-radius: 20px;">
                 Dataset
             </a>
             <a href="{{url_for("preprocessing")}}" class="menu" style="margin-bottom:25px;display:flex;color:black;text-decoration: none;align-items: center;padding-left: 20px;margin-left:20px;height:4rem;border-top-left-radius: 20px;border-bottom-left-radius: 20px;">
@@ -107,17 +123,17 @@
 
         </div>
     </div>
-    <div class="containerIsi" style="border-radius:20px;margin-left:0px;background-color:#f3f3f3;display:flex;width:100%;display: flex;flex-direction: column;">
+    <div class="containerIsi" style="border-radius:20px;margin-left:0px;background-color:#48426d;color:white;display:flex;width:100%;display: flex;flex-direction: column;">
         <div style="display: flex;height:100px;justify-content: center;align-items: center;padding-left:20px;padding-right:20px">
             <div style="font-size: 2rem;text-align: center; padding-top:25px;padding-bottom:25px ">Dataset Drama Korea</div>
         </div>
         <div style="padding-left:25px;padding-right:25px;display: flex;">
-            <div id="btnPilihFile" style="cursor:pointer;background-color:#1F92EE;flex:1;color:white;border-radius:5px;margin-right: 15px;padding:5px;height:30px;display: flex;justify-content: center;align-items: center;">Pilih File</div>
+            <div id="btnPilihFile" style="cursor:pointer;background-color:#f1aa9b;flex:1;color:white;border-radius:5px;margin-right: 15px;padding:5px;height:30px;display: flex;justify-content: center;align-items: center;">Pilih File</div>
             <form id="formImportDataset" action="/importdataset" method="POST" enctype="multipart/form-data" style="display:none">
                 <input id="pickDataset" type="file" name="dataset">
                 <input id="submitDataset" type="submit">
             </form>
-            <div id="btnImport" style="cursor:pointer;width:100px;background-color:#1F92EE;display: flex;justify-content: center;align-items: center;color: white;border-radius: 5px;">Import</div>
+            <div id="btnImport" style="cursor:pointer;width:100px;background-color:#f1aa9b;display: flex;justify-content: center;align-items: center;color: white;border-radius: 5px;">Import</div>
         </div>
         <div style="padding-left:25px;padding-right:25px;margin-top:25px;padding-bottom:25px">
             <table style="background-color:white" id="table"  data-search="true" data-page-size="8" data-pagination="true"></table>
