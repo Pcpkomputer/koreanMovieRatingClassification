@@ -178,8 +178,21 @@ def klasifikasi():
     clf = CategoricalNB()
     clf.fit(X_train,y_train)
     predicted = clf.predict(X_test)
-    print(confusion_matrix(y_test,predicted))
-    return render_template("klasifikasi.html")
+    payload = []
+    for index,x in enumerate(X_test):
+        arr = x
+        arr.append(y_test[index])
+        payload.append({
+            "no":index+1,
+            "stasiuntv":arr[0],
+            "genre":arr[1],
+            "writer":arr[2],
+            "director":arr[3],
+            "actor":arr[4],
+            "status":arr[5],
+        })
+    #print(confusion_matrix(y_test,predicted))
+    return render_template("klasifikasi.html", data=json.dumps(payload))
 
 @app.route("/pengujian")
 def pengujian():
