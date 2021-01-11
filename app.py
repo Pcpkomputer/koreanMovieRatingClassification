@@ -196,7 +196,20 @@ def klasifikasi():
 
 @app.route("/pengujian")
 def pengujian():
-    return render_template("pengujian.html");
+    mydb.connect()
+    cursor = mydb.cursor()
+    cursor.execute("SELECT * FROM preprocessing")
+    data = cursor.fetchall()
+    X = [[x[0],x[1],x[2],x[3],x[4]] for x in data]
+    y = [x[5] for x in data]
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1, random_state=0)
+    clf = CategoricalNB()
+    clf.fit(X_train,y_train)
+    predicted = clf.predict(X_test)
+    hasil = confusion_matrix(y_test,predicted)
+    akurasi = (hasil[0][0]+hasil[1][1])/(hasil[0][0]+hasil[0][1]+hasil[1][0]+hasil[1][1])
+    
+    return render_template("pengujian.html",hasil=hasil,akurasi=round(akurasi*100));
 
 @app.route("/keluar")
 def keluar():
