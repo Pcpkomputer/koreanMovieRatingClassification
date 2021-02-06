@@ -19,43 +19,8 @@ app = Flask(__name__)
 
 app.secret_key="nuhaaaaaa"
 
-@app.route("/", methods=["POST","GET"])
-def index():
-    if 'admin' in session:
-        return redirect(url_for("dashboard"))
-    if request.method=="POST":
-        email = request.form["email"]
-        password = request.form["password"]
-        if len(email)==0 or len(password)==0:
-            return render_template("index.html",error="Email atau password tidak boleh kosong!")
-        else:
-            mydb.connect()
-            cursor = mydb.cursor(buffered=True)
-
-            cursor.execute("SELECT * FROM admin WHERE email=%s",(email,))
-            account = cursor.fetchone()
-
-
-            if account==None:
-                cursor.close()
-                mydb.close()
-                return render_template("index.html",error="Email tidak ditemukan!")
-            else:
-                u = account[1]
-                p = account[2]
-                cursor.close()
-                mydb.close()
-                if u==email and p==password:
-                    session["admin"]=True
-                    return redirect(url_for("dashboard"))
-                else:
-                    return render_template("index.html",error="Login gagal!")
-    return render_template("index.html")
-
-@app.route("/dashboard", methods=["POST","GET"])
-def dashboard():
-    if "admin" not in session:
-        return redirect(url_for("index"))
+@app.route("/",methods=["POST","GET"])
+def public_classification():
     if request.method=="POST":
 
         stasiuntv_ = request.form["stasiuntv"]
@@ -110,7 +75,69 @@ def dashboard():
         hasil = labelEncoderStatus.inverse_transform([clf.predict([[s,g,p,d,t]])[0]])[0]
         mydb.close()
 
-        return render_template("dashboard.html",hasil=hasil)
+        return render_template("public_classification.html",hasil=hasil)
+    mydb.connect()
+    cursor=mydb.cursor()
+    
+    cursor.execute("SELECT DISTINCT(stasiuntv) FROM dataset");
+    stasiuntv = [x[0] for x in cursor.fetchall()]
+
+    cursor.execute("SELECT DISTINCT(genre) FROM dataset")
+    genre = [x[0] for x in cursor.fetchall()]
+
+    cursor.execute("SELECT DISTINCT(penulis) FROM dataset")
+    penulis = [x[0] for x in cursor.fetchall()]
+
+    cursor.execute("SELECT DISTINCT(direktur) FROM dataset")
+    direktur = [x[0] for x in cursor.fetchall()]
+
+    cursor.execute("SELECT DISTINCT(tokohutama) FROM dataset")
+    tokohutama = [x[0] for x in cursor.fetchall()]
+
+
+    cursor.close()
+    mydb.close()
+    return render_template("public_Classification.html", genre=genre,stasiuntv=stasiuntv,penulis=penulis,direktur=direktur,tokohutama=tokohutama)
+
+
+
+@app.route("/login", methods=["POST","GET"])
+def index():
+    if 'admin' in session:
+        return redirect(url_for("dashboard"))
+    if request.method=="POST":
+        email = request.form["email"]
+        password = request.form["password"]
+        if len(email)==0 or len(password)==0:
+            return render_template("index.html",error="Email atau password tidak boleh kosong!")
+        else:
+            mydb.connect()
+            cursor = mydb.cursor(buffered=True)
+
+            cursor.execute("SELECT * FROM admin WHERE email=%s",(email,))
+            account = cursor.fetchone()
+
+
+            if account==None:
+                cursor.close()
+                mydb.close()
+                return render_template("index.html",error="Email tidak ditemukan!")
+            else:
+                u = account[1]
+                p = account[2]
+                cursor.close()
+                mydb.close()
+                if u==email and p==password:
+                    session["admin"]=True
+                    return redirect(url_for("dashboard"))
+                else:
+                    return render_template("index.html",error="Login gagal!")
+    return render_template("index.html")
+
+@app.route("/dashboard", methods=["POST","GET"])
+def dashboard():
+    if "admin" not in session:
+        return redirect(url_for("index"))
 
     mydb.connect()
     cursor=mydb.cursor()
